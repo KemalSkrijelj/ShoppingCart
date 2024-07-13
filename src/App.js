@@ -7,7 +7,6 @@ import "./App.css";
 import Products from "./pages/Products/Products";
 import Outlet from "./pages/Outlet/Outlet";
 import Cart from "./pages/Cart/Cart";
-import json from "./common/products.json";
 
 function App() {
   return (
@@ -20,8 +19,6 @@ function App() {
           <Route path="/outlet" element={<Outlet />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>
-        {json.map((item, index) => Object.assign(item, { index }))}
-        {json.map((item, stock) => Object.assign(item, { stock }))}
         <Footer />
       </div>
     </>

@@ -2,9 +2,6 @@
   display: flex;
   align-items: center;
   background-color: rgb(0,51,102);
-  position: absolute;
-  bottom: 0;
-  left: 0;
   width: 100%;
   color: white;
   min-height: 10vh;
