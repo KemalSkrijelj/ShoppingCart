@@ -1,5 +1,18 @@
 .product-page{
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  
+  grid-template-columns: repeat(4, 1fr);
+  margin: 40px 0px;
+  justify-items: center;
+  grid-auto-rows: 400px;
+  gap: 50px;
+}
+.div-numOfPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  color: black;
+  font-size: 20px;
+  margin-bottom: 20px;
 }

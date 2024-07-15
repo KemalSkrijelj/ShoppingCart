@@ -1,0 +1,8 @@
+.outlet-page{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 40px 0px;
+  justify-items: center;
+  grid-auto-rows: 400px;
+  gap: 50px;
+}

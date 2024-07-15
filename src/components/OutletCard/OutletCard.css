@@ -1,0 +1,25 @@
+.outlet-card{
+  display: flex;
+  padding: 25px;
+  border:  2px solid rgb(224, 224, 224);
+  flex-direction: column;
+  border-radius: 10px ;
+  min-height: 420px ;
+  box-shadow: 0 0 10px 5px #e64980;
+  width: 280px !important;
+  gap: 8px;
+}
+.badge-onSale{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e64980; 
+  color:white;
+  height:30px; 
+  width: 80px;
+  border-radius: 20px;
+}
+.outlet-card:hover {
+  transition: 1s all ease;
+  box-shadow: none;
+}

@@ -7,7 +7,6 @@ import "./App.css";
 import Products from "./pages/Products/Products";
 import Outlet from "./pages/Outlet/Outlet";
 import Cart from "./pages/Cart/Cart";
-
 function App() {
   return (
     <>
@@ -18,6 +17,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/outlet" element={<Outlet />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<Home />} />
         </Routes>
         <Footer />
       </div>
