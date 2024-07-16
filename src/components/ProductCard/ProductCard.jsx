@@ -4,7 +4,14 @@ import "../../common/products.json";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button } from "@mantine/core";
 
-const ProductCard = ({ image_url, description, brand_name, price, title }) => {
+const ProductCard = ({
+  image_url,
+  description,
+  brand_name,
+  price,
+  title,
+  onClick,
+}) => {
   return (
     <Card
       shadow="sm"
@@ -26,7 +33,7 @@ const ProductCard = ({ image_url, description, brand_name, price, title }) => {
       <Text mt="xs" c="dimmed" size="sm">
         {price}rsd
       </Text>
-      <Button className="btn-products" onClick={() => {}}>
+      <Button className="btn-products" onClick={onClick}>
         <FaShoppingCart className="icon icon-card" />
         <p>Add to Cart</p>
       </Button>

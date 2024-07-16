@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Products.css";
 import products from "../../common/products.json";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import Pagination from '../../components/Paginations/Pagination'
+import Pagination from "../../components/Paginations/Pagination";
+import { AppContext } from "../../context/AppContext";
 const Products = () => {
+  const { addToCart } = useContext(AppContext);
   const [page, setPage] = useState(1);
   const numOfProductsPerPage = 12;
   const numOfProducts = products.length;
@@ -28,8 +30,8 @@ const Products = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
-    })
-  }, [page])
+    });
+  }, [page]);
   return (
     <>
       <div className="product-page">
@@ -43,6 +45,7 @@ const Products = () => {
               description={product.short_description}
               price={product.current_price}
               stock={product.stock}
+              onClick={() => addToCart(product)}
             />
           ))
           .slice(
@@ -51,7 +54,9 @@ const Products = () => {
           )}
       </div>
       <Pagination page={page} numOfPages={numOfPages} setPage={setPage} />
-      <div  className="div-numOfPage"><p>Page:{page}</p></div>
+      <div className="div-numOfPage">
+        <p>Page:{page}</p>
+      </div>
     </>
   );
 };

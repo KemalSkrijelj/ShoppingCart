@@ -1,10 +1,10 @@
 .footer {
   display: flex;
   align-items: center;
-  background-color: rgb(0,51,102);
+  min-height: 10vh;
+  background-color: #003366;
   width: 100%;
   color: white;
-  min-height: 10vh;
 }
 .icons-footer {
   width: 40%;
