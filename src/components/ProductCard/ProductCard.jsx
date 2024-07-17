@@ -3,6 +3,8 @@ import "./ProductCard.css";
 import "../../common/products.json";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button } from "@mantine/core";
+import { useContext } from "react";
+import { AppContext, ContextProvider } from "../../context/AppContext";
 
 const ProductCard = ({
   image_url,
@@ -10,8 +12,11 @@ const ProductCard = ({
   brand_name,
   price,
   title,
+  product,
   onClick,
 }) => {
+  const { productsInCart } = useContext(AppContext);
+  const productInCart = productsInCart.some((item) => item.id === product.id);
   return (
     <Card
       shadow="sm"
@@ -35,7 +40,7 @@ const ProductCard = ({
       </Text>
       <Button className="btn-products" onClick={onClick}>
         <FaShoppingCart className="icon icon-card" />
-        <p>Add to Cart</p>
+        {productInCart ? <p>Remove from cart</p> : <p>Add to cart</p>}
       </Button>
     </Card>
   );

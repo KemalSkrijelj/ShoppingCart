@@ -10,7 +10,16 @@ function ContextProvider({ children }) {
       { ...product, stock: product.stock - 1 },
     ]);
   };
-  const values = { productsInCart, setProductsInCart, addToCart };
+  const removeFromCart = (product) => {
+    const newProducts = productsInCart.filter((item) => item.id !== product.id);
+    setProductsInCart(newProducts);
+  };
+  const values = {
+    productsInCart,
+    setProductsInCart,
+    addToCart,
+    removeFromCart,
+  };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }
 

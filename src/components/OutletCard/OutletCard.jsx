@@ -3,6 +3,7 @@ import { Badge, Card, Group, Image, Text } from "@mantine/core";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button } from "@mantine/core";
 import json from "../../common/products.json";
+import { useEffect } from "react";
 
 const OutletCard = ({ image_url, title, current_price, discount }) => {
   let parseCurrentPrice = 0;

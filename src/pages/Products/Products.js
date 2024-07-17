@@ -5,7 +5,7 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 import Pagination from "../../components/Paginations/Pagination";
 import { AppContext } from "../../context/AppContext";
 const Products = () => {
-  const { addToCart } = useContext(AppContext);
+  const { addToCart, productsInCart, removeFromCart } = useContext(AppContext);
   const [page, setPage] = useState(1);
   const numOfProductsPerPage = 12;
   const numOfProducts = products.length;
@@ -36,7 +36,11 @@ const Products = () => {
     <>
       <div className="product-page">
         {products
-          .map((product) => (
+          .map((product) => {
+            const productInCart = productsInCart.find(
+              (item) => item.id === product.id
+            );
+          return(
             <ProductCard
               key={product.id}
               image_url={product.image_url}
@@ -44,19 +48,25 @@ const Products = () => {
               title={product.title}
               description={product.short_description}
               price={product.current_price}
+              product={product}
               stock={product.stock}
-              onClick={() => addToCart(product)}
+              discount={product.discount}
+              onClick={() => {
+                if (productInCart) {
+                  removeFromCart(product);
+                } else {
+                  addToCart(product);
+                }
+              }}
             />
-          ))
+          );
+        })
           .slice(
             numOfProductsPerPage * (page - 1),
             numOfProductsPerPage * page
           )}
       </div>
       <Pagination page={page} numOfPages={numOfPages} setPage={setPage} />
-      <div className="div-numOfPage">
-        <p>Page:{page}</p>
-      </div>
     </>
   );
 };

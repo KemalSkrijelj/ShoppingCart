@@ -14,7 +14,6 @@ const Pagination = ({ numOfPages, setPage, page }) => {
     if (isActive) {
     }
   };
-
   return (
     <div className="pagination">
       <button
@@ -27,18 +26,18 @@ const Pagination = ({ numOfPages, setPage, page }) => {
         {" "}
         <FaArrowLeft />
       </button>
-      {arr.map((num) => {
-        const isPageActive = page === setPage
+      {arr.map((value, index) => {
+        const isPageActive = page === value;
         return (
           <button
             className="pagination-btn"
-            key={num}
-            style={{backgroundColor: isPageActive ? "" : ""}}
+            key={index}
+            style={{ backgroundColor: isPageActive ? "#f47422" : "#003366" }}
             onClick={() => {
-              setPage(num);
+              setPage(value);
             }}
           >
-            {num}
+            {value}
           </button>
         );
       })}
