@@ -2,10 +2,21 @@ import "./OutletCard.css";
 import { Badge, Card, Group, Image, Text } from "@mantine/core";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button } from "@mantine/core";
-import json from "../../common/products.json";
-import { useEffect } from "react";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 
-const OutletCard = ({ image_url, title, current_price, discount }) => {
+const OutletCard = ({
+  image_url,
+  title,
+  current_price,
+  discount,
+  product,
+  onClick,
+}) => {
+  const { productsInCartOutlet } = useContext(AppContext);
+  const productInCart = productsInCartOutlet
+    ? productsInCartOutlet.find((item) => item.id === product.id)
+    : null;
   let parseCurrentPrice = 0;
   if (current_price) {
     parseCurrentPrice = parseFloat(
@@ -14,6 +25,7 @@ const OutletCard = ({ image_url, title, current_price, discount }) => {
   }
   var totalValue = parseCurrentPrice * ((100 - discount) / 100);
   const priceWithDiscount = totalValue.toFixed(2);
+
   return (
     <>
       <Card
@@ -49,9 +61,9 @@ const OutletCard = ({ image_url, title, current_price, discount }) => {
           <p style={{ textDecoration: "line-through" }}>{current_price}rsd</p>
           <p>{priceWithDiscount} rsd</p>
         </Text>
-        <Button className="btn-products" onClick={() => {}}>
+        <Button className="btn-products" onClick={onClick}>
           <FaShoppingCart className="icon icon-card" />
-          <p>Add to Cart</p>
+          {productInCart ? <p>Remove from cart</p> : <p>Add to cart</p>}
         </Button>
       </Card>
     </>

@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import outletData from "../../common/products.json";
+import outletData from "../../common/onSaleProducts.json";
 import OutletCard from "../../components/OutletCard/OutletCard";
 import Pagination from "../../components/Paginations/Pagination";
 import "./Outlet.css";
 import { AppContext } from "../../context/AppContext";
 const Outlet = () => {
-  const [outlet, setOutlet] = useState(outletData);
-  const { addToCart, productsInCart, removeFromCart } = useContext(AppContext);
+  const { addToCartOutlet, productsInCartOutlet, removeFromCartOutlet } = useContext(AppContext);
 
   const [page, setPage] = useState(1);
   const numOfProductsPerPage = 12;
@@ -39,15 +38,15 @@ const Outlet = () => {
       <div className="outlet-page">
         {outletData
           .map((product) => {
-            const productInCart = productsInCart.find(
-              (item) => item.id === product.id
-            );
-            const strPrice = product.current_price;
-            const numPrice = +strPrice.replace(".", "").replace(",", ".");
-            const newPrice = (
-              numPrice -
-              (product.percentage / 100) * numPrice
-            ).toFixed(2);
+            const productInCartOutlet = productsInCartOutlet
+            ? productsInCartOutlet.find((item) => item.id === product.id)
+            : null;
+          const strPrice = product.current_price;
+          const numPrice = +strPrice.replace(".", "").replace(",", ".");
+          const newPrice = (
+            numPrice -
+            (product.percentage / 100) * numPrice
+          ).toFixed(2);
             return (
               <OutletCard
                 key={product.id}
@@ -58,15 +57,15 @@ const Outlet = () => {
                 stock={product.stock}
                 current_price={product.current_price}
                 onClick={() => {
-                  if (productInCart) {
-                    removeFromCart(product);
+                  if (productInCartOutlet) {
+                    removeFromCartOutlet(product);
                   } else {
-                    addToCart(product);
+                    addToCartOutlet(product);
                   }
                 }}
+                product={product}
                 price={product.current_price}
-                discount={product.percentage ? true : false}
-                discountedPrice={newPrice}
+                discount={product.discount}
               />
             );
           })
