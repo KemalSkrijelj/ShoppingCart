@@ -41,7 +41,7 @@ function ContextProvider({ children, id }) {
     const newProducts = productsInCart.filter((item) => item.id !== product.id);
     setProductsInCart(newProducts);
   };
-
+  
   const addToCartOutlet = (product) => {
     setProductsInCartOutlet((prevProductsInCartOutlet) => {
       if (!prevProductsInCartOutlet) prevProductsInCartOutlet = [];
@@ -64,13 +64,46 @@ function ContextProvider({ children, id }) {
     setProductsInCartOutlet(newProducts);
   };
   
+  const decrementProduct = (product) => {
+    const newCartProducts = productsInCart.map((item) => {
+      const matchProduct = product?.id === item?.id;
+      if (!matchProduct) return item;
+      else {
+        return {
+          ...item,
+          quantity: item.quantity - 1,
+          stock: item.stock + 1,
+        };
+      }
+    });
+    setProductsInCart(newCartProducts);
+  };
+
+  const incrementProduct = (product) => {
+    const newCartProducts = productsInCart.map((item) => {
+      const matchProduct = product?.id === item?.id;
+      if (!matchProduct) return item;
+      else {
+        return {
+          ...item,
+          quantity: item.quantity + 1,
+          stock: item.stock - 1,
+        };
+      }
+    });
+    setProductsInCart(newCartProducts);
+  };
   const values = {
+    productsInCartOutlet,
+    setProductsInCartOutlet,
     productsInCart,
     setProductsInCart,
     addToCart,
     removeFromCart,
     addToCartOutlet,
     removeFromCartOutlet,
+    incrementProduct,
+    decrementProduct,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

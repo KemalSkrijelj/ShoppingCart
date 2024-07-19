@@ -1,15 +1,66 @@
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
+import shopPhoto from "../../assets/shop.jpg";
+import CartCard from "../../components/CartCard/CartCard";
+import "./Cart.css";
+import { Link } from "react-router-dom";
+export default function Cart() {
+  const {
+    productsInCart,
+    removeFromCart,
+    decrementProduct,
+    incrementProduct,
+    productsInCartOutlet,
+  } = useContext(AppContext);
+  const totalAmount = productsInCart.reduce((acc, curr) => {
+    let newPrice;
+    if (curr.discountedPrice) {
+      const strPrice = curr.discountedPrice;
+      newPrice = +strPrice.replace(".", "").replace(",", ".");
+    } else {
+      const strPrice = curr.current_price;
+      newPrice = +strPrice.replace(".", "").replace(",", ".");
+    }
+    return acc + newPrice;
+  }, 0);
 
-const Cart = () => {
-  const { productsInCart } = useContext(AppContext);
-  console.log(productsInCart);
+  console.log("Products in cart:", productsInCart);
   return (
-    <>
-      <div className="card-producs"></div>
-      <div className="card-outlet"></div>
-    </>
+    <div className="wrapper-page">
+      {productsInCart.length < 1 ? (
+        <div className="error">
+          <img className="error-img" src={shopPhoto} alt="img-error" />
+          <h2>No items in cart</h2>
+          <p>
+            Start browsing <Link to="/products">products</Link>
+          </p>
+        </div>
+      ) : (
+        <div className="wrapper-cart">
+          <h1>My Cart</h1>
+          {productsInCart.map((product) => {
+            return (
+              <CartCard
+                key={product.id}
+                image={product.image_url}
+                title={product.title}
+                stock={product.stock}
+                price={
+                  product.discountedPrice
+                    ? product.discountedPrice
+                    : product.current_price
+                }
+                description={product.short_description}
+                onClick={() => removeFromCart(product)}
+                quantity={product.quantity}
+                decrementProduct={() => decrementProduct(product)}
+                incrementProduct={() => incrementProduct(product)}
+              />
+            );
+          })}
+          <h1>Total amount: {totalAmount}</h1>
+        </div>
+      )}
+    </div>
   );
-};
-
-export default Cart;
+}

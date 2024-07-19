@@ -4,12 +4,11 @@ import "../../common/products.json";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button } from "@mantine/core";
 import { useContext } from "react";
-import { AppContext, ContextProvider } from "../../context/AppContext";
+import { AppContext } from "../../context/AppContext";
 
 const ProductCard = ({
   image_url,
   description,
-  brand_name,
   price,
   title,
   product,

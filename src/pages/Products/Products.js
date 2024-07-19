@@ -4,6 +4,7 @@ import products from "../../common/products.json";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import Pagination from "../../components/Paginations/Pagination";
 import { AppContext } from "../../context/AppContext";
+import { notifications } from '@mantine/notifications';
 const Products = () => {
   const { addToCart, productsInCart, removeFromCart } = useContext(AppContext);
   const [page, setPage] = useState(1);
@@ -54,6 +55,10 @@ const Products = () => {
               onClick={() => {
                 if (productInCart) {
                   removeFromCart(product);
+                  notifications.show({
+                    title: 'Default notification',
+                    message: 'Hey there, your code is awesome! 🤥',
+                  })
                 } else {
                   addToCart(product);
                 }

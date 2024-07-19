@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useContext, useEffect, useState } from "react";
 import outletData from "../../common/onSaleProducts.json";
 import OutletCard from "../../components/OutletCard/OutletCard";
@@ -60,7 +61,7 @@ const Outlet = () => {
                   if (productInCartOutlet) {
                     removeFromCartOutlet(product);
                   } else {
-                    addToCartOutlet(product);
+                    addToCartOutlet({ ...product, discountedPrice: newPrice });
                   }
                 }}
                 product={product}

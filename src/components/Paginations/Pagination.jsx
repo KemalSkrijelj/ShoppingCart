@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
 import "./Pagination.css";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
@@ -9,11 +8,6 @@ const Pagination = ({ numOfPages, setPage, page }) => {
   for (let i = 1; i <= numOfPages; i++) {
     arr.push(i);
   }
-  const [isActive, setIsActive] = useState(false);
-  const changeColor = () => {
-    if (isActive) {
-    }
-  };
   return (
     <div className="pagination">
       <button
