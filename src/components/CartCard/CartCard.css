@@ -45,3 +45,35 @@
 .product-price > p {
   color: #838386;
 }
+.quantity-product{
+ display: flex;
+ align-items: center;
+ flex-direction: column;
+ gap: 10px;
+}
+.decrement-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: red;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: pointer;
+}
+.increment-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: green;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: pointer;
+}

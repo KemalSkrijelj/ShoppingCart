@@ -4,27 +4,30 @@ import shopPhoto from "../../assets/shop.jpg";
 import CartCard from "../../components/CartCard/CartCard";
 import "./Cart.css";
 import { Link } from "react-router-dom";
+
 export default function Cart() {
   const {
     productsInCart,
     removeFromCart,
     decrementProduct,
     incrementProduct,
-    productsInCartOutlet,
+    formatNumber,
   } = useContext(AppContext);
+
   const totalAmount = productsInCart.reduce((acc, curr) => {
     let newPrice;
     if (curr.discountedPrice) {
-      const strPrice = curr.discountedPrice;
-      newPrice = +strPrice.replace(".", "").replace(",", ".");
+      newPrice = parseFloat(
+        curr.discountedPrice.replace(/\./g, "").replace(",", ".")
+      );
     } else {
-      const strPrice = curr.current_price;
-      newPrice = +strPrice.replace(".", "").replace(",", ".");
+      newPrice = parseFloat(
+        curr.current_price.replace(/\./g, "").replace(",", ".")
+      );
     }
     return acc + newPrice;
   }, 0);
-
-  console.log("Products in cart:", productsInCart);
+  
   return (
     <div className="wrapper-page">
       {productsInCart.length < 1 ? (
@@ -39,17 +42,21 @@ export default function Cart() {
         <div className="wrapper-cart">
           <h1>My Cart</h1>
           {productsInCart.map((product) => {
+            const formattedPrice = product.discountedPrice
+              ? parseFloat(
+                  product.discountedPrice.replace(/\./g, "").replace(",", ".")
+                )
+              : parseFloat(
+                  product.current_price.replace(/\./g, "").replace(",", ".")
+                );
+
             return (
               <CartCard
                 key={product.id}
                 image={product.image_url}
                 title={product.title}
                 stock={product.stock}
-                price={
-                  product.discountedPrice
-                    ? product.discountedPrice
-                    : product.current_price
-                }
+                price={formattedPrice}
                 description={product.short_description}
                 onClick={() => removeFromCart(product)}
                 quantity={product.quantity}
@@ -58,7 +65,7 @@ export default function Cart() {
               />
             );
           })}
-          <h1>Total amount: {totalAmount}</h1>
+          <h1>Total amount: {formatNumber(totalAmount)} rsd</h1>
         </div>
       )}
     </div>

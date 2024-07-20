@@ -16,6 +16,7 @@ const ProductCard = ({
 }) => {
   const { productsInCart } = useContext(AppContext);
   const productInCart = productsInCart.some((item) => item.id === product.id);
+  
   return (
     <Card
       shadow="sm"

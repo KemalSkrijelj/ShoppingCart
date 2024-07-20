@@ -3,10 +3,6 @@ import { createContext, useEffect, useState } from "react";
 const AppContext = createContext();
 
 function ContextProvider({ children, id }) {
-  const [productsInCartOutlet, setProductsInCartOutlet] = useState(() => {
-    const savedOutletProducts = localStorage.getItem("cartOutlet");
-    return savedOutletProducts ? JSON.parse(savedOutletProducts) : [];
-  });
   const [productsInCart, setProductsInCart] = useState(() => {
     const savedProducts = localStorage.getItem("cart");
     return savedProducts ? JSON.parse(savedProducts) : [];
@@ -16,9 +12,6 @@ function ContextProvider({ children, id }) {
     localStorage.setItem("cart", JSON.stringify(productsInCart));
   }, [productsInCart]);
 
-  useEffect(() => {
-    localStorage.setItem("cartOutlet", JSON.stringify(productsInCartOutlet));
-  }, [productsInCartOutlet]);
 
   const addToCart = (product) => {
     setProductsInCart((prev) => {
@@ -42,27 +35,7 @@ function ContextProvider({ children, id }) {
     setProductsInCart(newProducts);
   };
   
-  const addToCartOutlet = (product) => {
-    setProductsInCartOutlet((prevProductsInCartOutlet) => {
-      if (!prevProductsInCartOutlet) prevProductsInCartOutlet = [];
-      const existingProductIndex = prevProductsInCartOutlet.findIndex(p => p.id === product.id);
-      let updatedCart;
-
-      if (existingProductIndex >= 0) {
-        updatedCart = prevProductsInCartOutlet.map((p, index) =>
-          index === existingProductIndex ? { ...p, stock: p.stock - 1 } : p
-        );
-      } else {
-        updatedCart = [...prevProductsInCartOutlet, { ...product, stock: product.stock - 1 }];
-      }
-
-      return updatedCart;
-    });
-  };
-  const removeFromCartOutlet = (productOnSale) => {
-    const newProducts = productsInCartOutlet.filter((item) => item.id !== productOnSale.id);
-    setProductsInCartOutlet(newProducts);
-  };
+ 
   
   const decrementProduct = (product) => {
     const newCartProducts = productsInCart.map((item) => {
@@ -93,17 +66,25 @@ function ContextProvider({ children, id }) {
     });
     setProductsInCart(newCartProducts);
   };
+  
+  const formatNumber = ( price ) =>  {
+    let formatted = (price / 100).toFixed(2);
+//        intiger deo i dec. deo razdvajanje
+    let [integerPart, decimalPart] = formatted.split('.');
+  
+    // Add . u intiger deo
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+    return `${integerPart},${decimalPart}`;
+  }
   const values = {
-    productsInCartOutlet,
-    setProductsInCartOutlet,
     productsInCart,
     setProductsInCart,
     addToCart,
     removeFromCart,
-    addToCartOutlet,
-    removeFromCartOutlet,
     incrementProduct,
     decrementProduct,
+    formatNumber,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 }

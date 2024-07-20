@@ -5,9 +5,7 @@ import logo from "../Navbar/shopping-logo.svg";
 import { FaShoppingCart } from "react-icons/fa";
 import { AppContext } from "../../context/AppContext";
 const Navbar = () => {
-  const { productsInCart, productsInCartOutlet } = useContext(AppContext);
-  const changingToNumber = Number(productsInCartOutlet);
-  console.log(changingToNumber);
+  const { productsInCart } = useContext(AppContext);
   return (
     <>
       <header>
@@ -49,7 +47,7 @@ const Navbar = () => {
                 {productsInCart.length > 0 && (
                   <div className="numOfProducts">
                     <p className="numOfProductsLength">
-                      {productsInCart.length + productsInCartOutlet.length}
+                      {productsInCart.length}
                     </p>
                   </div>
                 )}
