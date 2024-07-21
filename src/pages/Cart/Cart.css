@@ -43,3 +43,17 @@
   height: 60vh;
   object-fit: cover;
 }
+.last-div{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.pay-btn {
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+  background-color: green;
+  border: none;
+  border-radius: 10px;
+  width: 30%;
+}

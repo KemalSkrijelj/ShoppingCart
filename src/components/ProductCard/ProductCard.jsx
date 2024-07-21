@@ -5,7 +5,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Button } from "@mantine/core";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
-
+import { showNotification } from '@mantine/notifications';
 const ProductCard = ({
   image_url,
   description,
@@ -14,9 +14,15 @@ const ProductCard = ({
   product,
   onClick,
 }) => {
+  const handleShowNotification = () => {
+    showNotification({
+      title: 'Uspeh',
+      message: 'Ovo je primer notifikacije!',
+      color: 'green',
+    });
+  };
   const { productsInCart } = useContext(AppContext);
   const productInCart = productsInCart.some((item) => item.id === product.id);
-  
   return (
     <Card
       shadow="sm"
@@ -39,7 +45,7 @@ const ProductCard = ({
         {price}rsd
       </Text>
       <Button className="btn-products" onClick={onClick}>
-        <FaShoppingCart className="icon icon-card" />
+        <FaShoppingCart className="icon icon-card" onClick={handleShowNotification}/>
         {productInCart ? <p>Remove from cart</p> : <p>Add to cart</p>}
       </Button>
     </Card>

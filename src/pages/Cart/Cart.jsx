@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import shopPhoto from "../../assets/shop.jpg";
 import CartCard from "../../components/CartCard/CartCard";
 import "./Cart.css";
 import { Link } from "react-router-dom";
+import Modal from "../../components/Modal/Modal";
 
 export default function Cart() {
   const {
@@ -14,6 +15,7 @@ export default function Cart() {
     formatNumber,
   } = useContext(AppContext);
 
+  const [modalOpen, setModalOpen] = useState(false);
   const totalAmount = productsInCart.reduce((acc, curr) => {
     let newPrice;
     if (curr.discountedPrice) {
@@ -27,7 +29,7 @@ export default function Cart() {
     }
     return acc + newPrice;
   }, 0);
-  
+
   return (
     <div className="wrapper-page">
       {productsInCart.length < 1 ? (
@@ -65,7 +67,17 @@ export default function Cart() {
               />
             );
           })}
-          <h1>Total amount: {formatNumber(totalAmount)} rsd</h1>
+          <div className="last-div">
+            <h1>Total amount: {formatNumber(totalAmount)} rsd</h1>
+            <button
+              className="pay-btn"
+              onClick={() => {
+                setModalOpen(true);
+              }}
+            >
+              Pay
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 
 const AppContext = createContext();
-
 function ContextProvider({ children, id }) {
   const [productsInCart, setProductsInCart] = useState(() => {
     const savedProducts = localStorage.getItem("cart");
@@ -11,7 +10,6 @@ function ContextProvider({ children, id }) {
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(productsInCart));
   }, [productsInCart]);
-
 
   const addToCart = (product) => {
     setProductsInCart((prev) => {
@@ -34,9 +32,7 @@ function ContextProvider({ children, id }) {
     const newProducts = productsInCart.filter((item) => item.id !== product.id);
     setProductsInCart(newProducts);
   };
-  
- 
-  
+
   const decrementProduct = (product) => {
     const newCartProducts = productsInCart.map((item) => {
       const matchProduct = product?.id === item?.id;
@@ -66,17 +62,17 @@ function ContextProvider({ children, id }) {
     });
     setProductsInCart(newCartProducts);
   };
-  
-  const formatNumber = ( price ) =>  {
+
+  const formatNumber = (price) => {
     let formatted = (price / 100).toFixed(2);
-//        intiger deo i dec. deo razdvajanje
-    let [integerPart, decimalPart] = formatted.split('.');
-  
+    //        intiger deo i dec. deo razdvajanje
+    let [integerPart, decimalPart] = formatted.split(".");
+
     // Add . u intiger deo
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
     return `${integerPart},${decimalPart}`;
-  }
+  };
   const values = {
     productsInCart,
     setProductsInCart,
