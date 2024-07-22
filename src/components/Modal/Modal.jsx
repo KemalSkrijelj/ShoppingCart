@@ -1,6 +1,8 @@
+import { AppContext } from "../../context/AppContext";
 import "./Modal.css";
-import React from "react";
+import React, { useContext, useState } from "react";
 const Modal = ({ children }) => {
+  const {removeFromCart} = useContext(AppContext)
   return (
     <>
       <div className="modal-conteiner">

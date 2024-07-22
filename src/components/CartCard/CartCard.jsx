@@ -1,8 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import "./CartCard.css";
 import { FaTrash } from "react-icons/fa";
 import { AppContext } from "../../context/AppContext";
-import Modal from "../Modal/Modal";
 
 const CartCard = ({
   image,
@@ -16,9 +15,9 @@ const CartCard = ({
   incrementProduct,
 }) => {
   const { formatNumber } = useContext(AppContext);
-  const [modalOpen, setModalOpen] = useState(false);
-  const displayPrice = price ? formatNumber(price) : "N/A";
+  const displayPrice = price ? formatNumber(price * quantity) : "N/A";
 
+  console.log(quantity)
   return (
     <>
       <div className="product-cart">
@@ -30,7 +29,7 @@ const CartCard = ({
         <div className="quantity-product">
           <button
             onClick={decrementProduct}
-            disabled={quantity === 0}
+            disabled={quantity === 1}
             className="decrement-btn"
           >
             -
@@ -50,8 +49,8 @@ const CartCard = ({
           <h2>{displayPrice} rsd</h2>
           <p>In stock: {stock}</p>
         </div>
-        <button onClick={() => setModalOpen(true)} className="remove-button">
-          <FaTrash  />
+        <button onClick={onClick} className="remove-button">
+          <FaTrash />
         </button>
       </div>
     </>

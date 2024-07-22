@@ -63,15 +63,11 @@ function ContextProvider({ children, id }) {
     setProductsInCart(newCartProducts);
   };
 
-  const formatNumber = (price) => {
-    let formatted = (price / 100).toFixed(2);
-    //        intiger deo i dec. deo razdvajanje
-    let [integerPart, decimalPart] = formatted.split(".");
-
-    // Add . u intiger deo
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
-    return `${integerPart},${decimalPart}`;
+   const formatNumber = (number) => {
+    return new Intl.NumberFormat("de-DE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
   };
   const values = {
     productsInCart,

@@ -38,10 +38,6 @@ const Outlet = () => {
               (product.discount / 100) * numPrice
             ).toFixed(2);
 
-            console.log(
-              `Product ID: ${product.id}, Original Price: ${strPrice}, Parsed Price: ${numPrice}, Discounted Price: ${discountedPrice}`
-            );
-
             return (
               <OutletCard
                 key={product.id}
