@@ -15,19 +15,20 @@ function ContextProvider({ children, id }) {
     setProductsInCart((prev) => {
       const findingSameIndex = prev.findIndex((p) => p.id === product.id);
       let updatedCart;
-
+  
       if (findingSameIndex >= 0) {
         updatedCart = prev.map((value, index) =>
           index === findingSameIndex
-            ? { ...value, stock: value.stock - 1 }
+            ? { ...value, stock: value.stock - 1, quantity: (value.quantity || 1) + 1 }
             : value
         );
       } else {
-        updatedCart = [...prev, { ...product, stock: product.stock - 1 }];
+        updatedCart = [...prev, { ...product, stock: product.stock - 1, quantity: 1 }];
       }
       return updatedCart;
     });
   };
+  
   const removeFromCart = (product) => {
     const newProducts = productsInCart.filter((item) => item.id !== product.id);
     setProductsInCart(newProducts);
@@ -63,9 +64,9 @@ function ContextProvider({ children, id }) {
     setProductsInCart(newCartProducts);
   };
 
-   const formatNumber = (number) => {
+  const formatNumber = (number) => {
     return new Intl.NumberFormat("de-DE", {
-      minimumFractionDigits: 2,
+      minimumFractionDigits: 1,
       maximumFractionDigits: 2,
     }).format(number);
   };

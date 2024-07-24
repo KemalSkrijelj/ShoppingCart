@@ -16,6 +16,7 @@ const ProductCard = ({
 }) => {
   const handleShowNotification = () => {
     showNotification({
+      style: {position: "absolute", bottom: 0, right: 0},
       title: 'Uspeh',
       message: 'Ovo je primer notifikacije!',
       color: 'green',

@@ -4,7 +4,9 @@ import products from "../../common/products.json";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import Pagination from "../../components/Paginations/Pagination";
 import { AppContext } from "../../context/AppContext";
-import { notifications } from '@mantine/notifications';
+import "@mantine/notifications/styles.css";
+// import Notifications from "../../components/Notifications";
+
 const Products = () => {
   const { addToCart, productsInCart, removeFromCart } = useContext(AppContext);
   const [page, setPage] = useState(1);
@@ -41,31 +43,37 @@ const Products = () => {
             const productInCart = productsInCart.find(
               (item) => item.id === product.id
             );
-          return(
-            <ProductCard
-              key={product.id}
-              image_url={product.image_url}
-              brand_name={product.brand_name}
-              title={product.title}
-              description={product.short_description}
-              price={product.current_price}
-              product={product}
-              stock={product.stock}
-              discount={product.discount}
-              onClick={() => {
-                if (productInCart) {
-                  removeFromCart(product);
-                  notifications.show({
-                    title: 'Default notification',
-                    message: 'Hey there, your code is awesome! 🤥',
-                  })
-                } else {
-                  addToCart(product);
-                }
-              }}
-            />
-          );
-        })
+            return (
+              <ProductCard
+                key={product.id}
+                image_url={product.image_url}
+                brand_name={product.brand_name}
+                title={product.title}
+                description={product.short_description}
+                price={product.current_price}
+                product={product}
+                stock={product.stock}
+                discount={product.discount}
+                onClick={() => {
+                  if (productInCart) {
+                    removeFromCart(product);
+                    // Notifications.show({
+                    //   title: "You successfully removed product from cart!",
+                    //   message: "You can go to cart to check it out!",
+                    //   color: "red",
+                    // });
+                  } else {
+                    addToCart(product);
+                    // Notifications.show({
+                    //   title: "You successfully added product in cart!",
+                    //   message: "You can go to cart to check it out!",
+                    //   color: "green",
+                    // });
+                  }
+                }}
+              />
+            );
+          })
           .slice(
             numOfProductsPerPage * (page - 1),
             numOfProductsPerPage * page

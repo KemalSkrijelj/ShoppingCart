@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { AppContext } from '../../context/AppContext';
-import shopPhoto from '../../assets/shop.jpg';
-import CartCard from '../../components/CartCard/CartCard';
-import { Link } from 'react-router-dom';
-import Modal from '../../components/Modal/Modal';
-import './Cart.css';
+import React, { useContext, useState } from "react";
+import { AppContext } from "../../context/AppContext";
+import shopPhoto from "../../assets/shop.jpg";
+import CartCard from "../../components/CartCard/CartCard";
+import { Link } from "react-router-dom";
+import Modal from "../../components/Modal/Modal";
+import "./Cart.css";
 
 export default function Cart() {
   const {
@@ -14,8 +14,10 @@ export default function Cart() {
     incrementProduct,
     formatNumber,
   } = useContext(AppContext);
+  const [productToRemove, setProductToRemove] = useState(null);
 
-  const totalAmount = productsInCart.reduce((acc, curr) => {
+
+  const totalPrice = productsInCart.reduce((acc, curr) => {
     let newPrice;
     if (curr.discountedPrice) {
       newPrice = parseFloat(
@@ -30,11 +32,30 @@ export default function Cart() {
     return acc + newPrice;
   }, 0);
 
+  const handleRemoveClick = (product) => {
+    setProductToRemove(product);
+    setModalOpen(true);
+  };
+  const handleConfirmRemove = () => {
+    if (productToRemove) {
+      removeFromCart(productToRemove);
+    }
+    setModalOpen(false);
+    setProductToRemove(null);
+  };
+
+  const handleCancelRemove = () => {
+    setModalOpen(false);
+    setProductToRemove(null);
+  };
+
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div className="wrapper-page">
-      {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
+      {modalOpen && (
+        <Modal onConfirm={handleConfirmRemove} onCancel={handleCancelRemove} />
+      )}
       {productsInCart.length < 1 ? (
         <div className="error">
           <img className="error-img" src={shopPhoto} alt="img-error" />
@@ -63,7 +84,7 @@ export default function Cart() {
                 stock={product.stock}
                 price={formattedPrice}
                 description={product.short_description}
-                onClick={() => removeFromCart(product)}
+                onClick={() => handleRemoveClick(product)}
                 quantity={product.quantity}
                 decrementProduct={() => decrementProduct(product)}
                 incrementProduct={() => incrementProduct(product)}
@@ -71,8 +92,11 @@ export default function Cart() {
             );
           })}
           <div className="last-div">
-            <h1>Total amount: {formatNumber(totalAmount)} rsd</h1>
-            <button className="pay-btn" onClick={() => setModalOpen(true)}>
+            <h1>Total amount: {formatNumber(totalPrice)} rsd</h1>
+            <button
+              className="pay-btn"
+              onClick={() => setModalOpen(!modalOpen)}
+            >
               Pay
             </button>
           </div>

@@ -6,12 +6,16 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
 import { ContextProvider } from "./context/AppContext";
+import "@mantine/notifications/styles.css";
+import { Notifications } from "@mantine/notifications";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <MantineProvider>
         <ContextProvider>
+        <Notifications />
             <App />
         </ContextProvider>
       </MantineProvider>
