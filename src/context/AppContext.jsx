@@ -15,20 +15,27 @@ function ContextProvider({ children, id }) {
     setProductsInCart((prev) => {
       const findingSameIndex = prev.findIndex((p) => p.id === product.id);
       let updatedCart;
-  
+
       if (findingSameIndex >= 0) {
         updatedCart = prev.map((value, index) =>
           index === findingSameIndex
-            ? { ...value, stock: value.stock - 1, quantity: (value.quantity || 1) + 1 }
+            ? {
+                ...value,
+                stock: value.stock - 1,
+                quantity: (value.quantity || 1) + 1,
+              }
             : value
         );
       } else {
-        updatedCart = [...prev, { ...product, stock: product.stock - 1, quantity: 1 }];
+        updatedCart = [
+          ...prev,
+          { ...product, stock: product.stock - 1, quantity: 1 },
+        ];
       }
       return updatedCart;
     });
   };
-  
+
   const removeFromCart = (product) => {
     const newProducts = productsInCart.filter((item) => item.id !== product.id);
     setProductsInCart(newProducts);
@@ -65,6 +72,9 @@ function ContextProvider({ children, id }) {
   };
 
   const formatNumber = (number) => {
+    if (typeof number !== "number" || isNaN(number)) {
+      return "Invalid number";
+    }
     return new Intl.NumberFormat("de-DE", {
       minimumFractionDigits: 1,
       maximumFractionDigits: 2,

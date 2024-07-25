@@ -21,6 +21,7 @@ const Outlet = () => {
     });
   }, [page]);
 
+  
   return (
     <>
       <div className="outlet-page">
@@ -29,14 +30,14 @@ const Outlet = () => {
             const productInCart = productsInCart
               ? productsInCart.find((item) => item.id === product.id)
               : null;
-            const strPrice = product.current_price;
-            const numPrice = parseFloat(
-              strPrice.replace(".", "").replace(",", ".")
-            );
+              const strPrice = product.current_price;
+              const numPrice = +strPrice.replace(".", "").replace(",", ".");
+              const newPrice = numPrice - (product.percentage / 100) * numPrice;
+  
             const discountedPrice = (
-              numPrice -
+              newPrice -
               (product.discount / 100) * numPrice
-            ).toFixed(2);
+            );
 
             return (
               <OutletCard
@@ -50,11 +51,13 @@ const Outlet = () => {
                 onClick={() => {
                   if (productInCart) {
                     removeFromCart(product);
+                    alert("Izbacili ste proizvod iz korpe")
                   } else {
                     addToCart({
                       ...product,
                       discountedPrice, 
                     });
+                    alert("Dodali ste proizvod u korpu! Idite do korpe.")
                   }
                 }}
                 product={product}

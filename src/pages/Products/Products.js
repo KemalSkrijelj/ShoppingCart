@@ -4,8 +4,8 @@ import products from "../../common/products.json";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import Pagination from "../../components/Paginations/Pagination";
 import { AppContext } from "../../context/AppContext";
+import { notifications } from '@mantine/notifications';
 import "@mantine/notifications/styles.css";
-// import Notifications from "../../components/Notifications";
 
 const Products = () => {
   const { addToCart, productsInCart, removeFromCart } = useContext(AppContext);
@@ -57,18 +57,11 @@ const Products = () => {
                 onClick={() => {
                   if (productInCart) {
                     removeFromCart(product);
-                    // Notifications.show({
-                    //   title: "You successfully removed product from cart!",
-                    //   message: "You can go to cart to check it out!",
-                    //   color: "red",
-                    // });
+                    alert("Izbacili ste proizvod iz korpe")
+
                   } else {
                     addToCart(product);
-                    // Notifications.show({
-                    //   title: "You successfully added product in cart!",
-                    //   message: "You can go to cart to check it out!",
-                    //   color: "green",
-                    // });
+                    alert("Dodali ste proizvod u korpu! Idite do korpe.")
                   }
                 }}
               />
